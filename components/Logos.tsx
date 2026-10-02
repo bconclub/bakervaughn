@@ -1,4 +1,4 @@
-// Placeholder marks. Swap for the real service logos and client logos when supplied.
+// Placeholder service marks. Swap for the real service logos when supplied.
 
 type MarkProps = { slug: string; className?: string };
 
@@ -63,25 +63,16 @@ export function ServiceMark({ slug, className = "size-6" }: MarkProps) {
   );
 }
 
-// Invented placeholder clients, not real businesses.
-const clients = [
-  { name: "Northfield", font: "font-bold tracking-[-0.03em]", mark: <path d="M12 3l9 17H3z" /> },
-  { name: "Harbour & Co", font: "font-semibold italic", mark: <path d="M2 14c3-3 5-3 8 0s5 3 8 0 3-2 4-2" fill="none" strokeWidth="2.2" /> },
-  { name: "EMBER", font: "font-black tracking-[0.18em]", mark: <path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3 1-6 1-9z" /> },
-  { name: "oakline", font: "font-medium tracking-[-0.01em]", mark: <path d="M5 19C5 9 11 4 20 4c0 9-5 15-15 15zM5 19l8-8" fill="none" strokeWidth="2" /> },
-  { name: "Tidewater", font: "font-semibold tracking-[0.02em]", mark: <circle cx="12" cy="12" r="8" fill="none" strokeWidth="2.4" /> },
-];
+// Client names, shown as plain wordmarks until their real logos are supplied.
+const clients = ["Charcoal Shack", "Arabian Grill", "Khaleej Mandi House", "Harlequin Care Limited", "1 Key Solution"];
 
 export function ClientLogos() {
   return (
     <div className="min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
     <ul className="marquee flex w-max items-center gap-12">
-      {[...clients, ...clients].map((c, i) => (
-        <li key={i} aria-hidden={i >= clients.length} className="flex items-center gap-2 text-text-3 transition-colors hover:text-text-2">
-          <svg viewBox="0 0 24 24" className="size-5 shrink-0 fill-current stroke-current" aria-hidden>
-            {c.mark}
-          </svg>
-          <span className={`text-[1.05rem] whitespace-nowrap ${c.font}`}>{c.name}</span>
+      {[...clients, ...clients].map((name, i) => (
+        <li key={i} aria-hidden={i >= clients.length} className="text-text-3 transition-colors hover:text-text-2">
+          <span className="text-[1.05rem] font-semibold whitespace-nowrap">{name}</span>
         </li>
       ))}
     </ul>
