@@ -199,8 +199,7 @@ export const leadership = [
 ];
 
 export const advisors = [
-  { name: "Sooraj Harris", role: "Growth" },
-  { name: "Nitish Nair", role: "Growth" },
+  { name: "Bridgeway Investments", role: "Growth" },
   { name: "Abhilash Kollat", role: "Strategy & analytics" },
   { name: "Thanzeel Ashruf", role: "Creative" },
   { name: "Aslej Salem", role: "Operations" },
