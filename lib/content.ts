@@ -32,7 +32,7 @@ export const tickets: Ticket[] = [
     reply: "Booked for 9:30am. Confirmation sent by text.",
     outcome: "Appointment booked · call logged",
     stamp: "Answered",
-    service: "Dialgen.AI",
+    service: "Dialgen.AI (AI Receptionist)",
   },
   {
     id: "rtw",
@@ -150,7 +150,7 @@ export const services = [
 
 export const flowSteps = [
   { title: "Attract", service: "Marketing & branding", caption: "Brand, ads and local SEO bring enquiries in." },
-  { title: "Answer", service: "PROXe + Dialgen.AI", caption: "Every message, form and call answered, qualified and booked." },
+  { title: "Answer", service: "PROXe + Dialgen.AI (AI Receptionist)", caption: "Every message, form and call answered, qualified and booked." },
   { title: "Run", service: "Faircode ERPNext", caption: "Orders, stock and accounts land in one place. Nothing re-typed." },
   { title: "Staff", service: "VisorFlow", caption: "Rotas, right-to-work and payroll, posting straight to the accounts." },
   { title: "Learn", service: "Back to marketing", caption: "Sales data shows which campaigns actually pay." },
