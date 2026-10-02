@@ -154,7 +154,7 @@ function VoiceCard() {
   return (
     <div className={`${glass} p-4`}>
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
-        <Tag color="#2dd4bf">AI receptionist</Tag>
+        <Tag color="#2dd4bf">Dialgen.AI · Calls</Tag>
         <span className="flex items-center gap-1.5 text-[11px] text-[#f87171]">
           <span className="live size-1.5 rounded-full bg-[#f87171]" /> Live · 0:42
         </span>

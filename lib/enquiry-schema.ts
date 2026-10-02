@@ -12,7 +12,7 @@ export const SERVICE_OPTIONS = [
 
 export const SERVICE_HINTS: Partial<Record<(typeof SERVICE_OPTIONS)[number], string>> = {
   "Winning and converting more customers": "AI customer acquisition",
-  "Answering calls and taking bookings": "AI receptionist",
+  "Answering calls and taking bookings": "Dialgen.AI, AI receptionist",
   "HR, payroll and compliance": "Rotas, right-to-work, payroll",
   "Stock, sales and accounts": "ERP",
   "Marketing and brand": "Ads, local SEO, branding",

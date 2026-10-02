@@ -20,7 +20,7 @@ export default function Operators() {
             </p>
             <p>
               We rolled out ERPNext across our own businesses first. Then came the problems ERP couldn't solve: missed
-              calls, slow replies and sponsor-licence paperwork. So we built PROXe, the AI receptionist and VisorFlow.
+              calls, slow replies and sponsor-licence paperwork. So we built PROXe, Dialgen.AI and VisorFlow.
             </p>
             <p className="font-mono text-sm text-text-3">[ADD: founding year and team size]</p>
           </div>
