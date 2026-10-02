@@ -48,7 +48,7 @@ export default function Operators() {
 
         <div className="mt-12 grid gap-6 border-t border-line pt-8 md:grid-cols-[0.6fr_1.4fr]" data-reveal>
           <p className="text-text-2">Advisory board</p>
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-4">
             {advisors.map((a) => (
               <li key={a.name}>
                 <p className="font-semibold">{a.name}</p>
