@@ -2,12 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { gsap, reducedMotion } from "@/lib/gsap";
-
-const WORDS = "Your whole business, running on one system.".split(" ");
+import type { HomeContent } from "@/lib/cms/home";
 
 // Words light up under the lamp as you scroll through.
-export default function Statement() {
+export default function Statement({ c }: { c: HomeContent["statement"] }) {
   const ref = useRef<HTMLElement>(null);
+  const lead = c.headline.split(" ").filter(Boolean);
+  const words = [...lead, ...c.highlight.split(" ").filter(Boolean)];
 
   useEffect(() => {
     if (reducedMotion() || !ref.current) return;
@@ -27,17 +28,17 @@ export default function Statement() {
   }, []);
 
   return (
-    <section ref={ref} className="border-y border-line-soft bg-ground-deep py-24 md:py-40" aria-label="What we believe">
+    <section ref={ref} id="statement" className="border-y border-line-soft bg-ground-deep py-24 md:py-40" aria-label="What we believe">
       <div className="wrap">
         <p className="display max-w-[18ch] text-[clamp(2.8rem,8vw,6rem)]">
-          {WORDS.map((w, i) => (
-            <span key={i} className={`w inline-block ${i >= WORDS.length - 2 ? "text-lamp" : ""}`}>
+          {words.map((w, i) => (
+            <span key={i} className={`w inline-block ${i >= lead.length ? "text-lamp" : ""}`}>
               {w}&nbsp;
             </span>
           ))}
         </p>
         <p className="mt-10 max-w-[40ch] text-xl leading-relaxed text-text-2">
-          Calls, enquiries, stock, staff and accounts, connected. Nothing re-typed, nothing missed.
+          {c.body}
         </p>
       </div>
     </section>

@@ -1,18 +1,18 @@
-import { problems } from "@/lib/content";
+import type { HomeContent } from "@/lib/cms/home";
 import TicketRail from "./TicketRail";
 
 // Paper section: the problem, with the system already working across
 // different kinds of business.
-export default function WhyWeExist() {
+export default function WhyWeExist({ c }: { c: HomeContent["why"] }) {
   return (
     <section className="bg-paper py-20 text-ink md:py-28" aria-labelledby="why-title">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
           <h2 id="why-title" className="display text-[clamp(2.4rem,5vw,4.5rem)]" data-reveal>
-            Most businesses don't need more software.
+            {c.title}
           </h2>
           <p className="max-w-[40ch] text-xl leading-relaxed text-ink-2 md:text-2xl lg:justify-self-end" data-reveal>
-            They need fewer missed calls, faster replies and one version of the truth.
+            {c.subtitle}
           </p>
         </div>
 
@@ -34,8 +34,8 @@ export default function WhyWeExist() {
 
           <div className="flex flex-col">
             <ol className="border-t border-ink/15">
-              {problems.map((p) => (
-                <li key={p.n} data-reveal className="grid grid-cols-[3rem_1fr] border-b border-ink/15 py-8">
+              {c.problems.map((p, i) => (
+                <li key={i} data-reveal className="grid grid-cols-[3rem_1fr] border-b border-ink/15 py-8">
                   <span className="font-mono text-sm text-ink-2">{p.n}</span>
                   <div>
                     <h3 className="text-2xl font-bold tracking-[-0.02em] [font-stretch:108%]">{p.title}</h3>
@@ -45,7 +45,7 @@ export default function WhyWeExist() {
               ))}
             </ol>
             <p className="mt-10 max-w-[36ch] text-2xl leading-snug font-semibold tracking-[-0.015em]" data-reveal>
-              We built Bakervaughn to fix all three, with one team and one connected system.
+              {c.closing}
             </p>
           </div>
         </div>

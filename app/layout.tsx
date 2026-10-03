@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Archivo, JetBrains_Mono } from "next/font/google";
-import SmoothScroll from "@/components/SmoothScroll";
-import Preloader from "@/components/Preloader";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -24,12 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-GB" className={`${archivo.variable} ${jetbrains.variable}`}>
-      <body>
-        <Preloader />
-        <SmoothScroll />
-        {children}
-        <div className="grain" aria-hidden />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

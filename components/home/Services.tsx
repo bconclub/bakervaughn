@@ -1,26 +1,25 @@
 import { ArrowUpRight } from "lucide-react";
-import { services } from "@/lib/content";
+import type { HomeContent } from "@/lib/cms/home";
 import EnquiryButton from "@/components/enquiry/EnquiryButton";
 import { ServiceMark, serviceColor } from "@/components/Logos";
 
 // Menu board: every service is a row with its own brand panel.
-export default function Services() {
+export default function Services({ c }: { c: HomeContent["services"] }) {
   return (
     <section id="services" className="py-20 md:py-28" aria-labelledby="services-title">
       <div className="wrap">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <h2 id="services-title" className="display max-w-[14ch] text-[clamp(2.4rem,5vw,4.5rem)]" data-reveal>
-            Five services. One brain behind them.
+            {c.title}
           </h2>
           <p className="max-w-[38ch] text-lg leading-relaxed text-text-2" data-reveal>
-            Each is sold separately. Use one, or join them up. Together they share the same data, so nothing gets
-            re-typed.
+            {c.intro}
           </p>
         </div>
 
         <ul className="mt-14 border-t border-line">
-          {services.map((s, i) => (
-            <li key={s.slug} data-reveal className="border-b border-line">
+          {c.items.map((s, i) => (
+            <li key={i} data-reveal className="border-b border-line">
               <a
                 href="#services"
                 className="group grid gap-4 py-7 md:grid-cols-[220px_1fr_1.3fr_auto] md:items-center md:gap-10 md:py-8"
@@ -28,7 +27,7 @@ export default function Services() {
                 <div
                   className="relative hidden aspect-[16/10] place-items-center overflow-hidden rounded-2xl border border-white/10 md:grid"
                   style={{
-                    background: `radial-gradient(120% 90% at 50% 110%, ${serviceColor[s.slug]}40, transparent 60%), oklch(19% 0.008 60)`,
+                    background: `radial-gradient(120% 90% at 50% 110%, ${(serviceColor[s.slug] ?? "#9ca3af")}40, transparent 60%), oklch(19% 0.008 60)`,
                   }}
                 >
                   <div
@@ -37,7 +36,7 @@ export default function Services() {
                   />
                   <span
                     className="relative grid size-14 place-items-center rounded-2xl border border-white/15 bg-white/[0.06] backdrop-blur-md transition-transform duration-300 group-hover:scale-110"
-                    style={{ color: serviceColor[s.slug], boxShadow: `0 0 40px -6px ${serviceColor[s.slug]}80` }}
+                    style={{ color: (serviceColor[s.slug] ?? "#9ca3af"), boxShadow: `0 0 40px -6px ${(serviceColor[s.slug] ?? "#9ca3af")}80` }}
                   >
                     <ServiceMark slug={s.slug} className="size-7" />
                   </span>
@@ -49,7 +48,7 @@ export default function Services() {
                   {/* phones: compact mark beside the name instead of the panel */}
                   <span
                     className="grid size-12 shrink-0 place-items-center rounded-xl border border-white/10 md:hidden"
-                    style={{ color: serviceColor[s.slug], background: `${serviceColor[s.slug]}1f` }}
+                    style={{ color: (serviceColor[s.slug] ?? "#9ca3af"), background: `${(serviceColor[s.slug] ?? "#9ca3af")}1f` }}
                   >
                     <ServiceMark slug={s.slug} className="size-6" />
                   </span>
@@ -78,9 +77,9 @@ export default function Services() {
         </ul>
 
         <div className="mt-10 flex flex-wrap items-center gap-4 text-text-2">
-          <span>Not sure where to start?</span>
+          <span>{c.helpPrompt}</span>
           <EnquiryButton source="services-help" service="Help me choose" variant="quiet" className="text-text">
-            Help me choose
+            {c.helpLabel}
           </EnquiryButton>
         </div>
       </div>

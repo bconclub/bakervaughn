@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { offices } from "@/lib/content";
+import type { HomeContent } from "@/lib/cms/home";
 import { reducedMotion } from "@/lib/gsap";
 
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -36,7 +36,12 @@ function useClock(tz: string | null) {
   const [t, setT] = useState("--:--");
   useEffect(() => {
     if (!tz) return;
-    const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: tz });
+    let fmt: Intl.DateTimeFormat;
+    try {
+      fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: tz });
+    } catch {
+      return; // unknown time zone typed in the CMS: leave the placeholder
+    }
     const update = () => setT(fmt.format(new Date()));
     update();
     const id = window.setInterval(update, 15000);
@@ -45,7 +50,7 @@ function useClock(tz: string | null) {
   return t;
 }
 
-function Row({ o, i, go }: { o: (typeof offices)[number]; i: number; go: boolean }) {
+function Row({ o, i, go }: { o: HomeContent["footer"]["offices"][number]; i: number; go: boolean }) {
   const time = useClock(o.tz);
   return (
     <tr className="border-b border-line-soft">
@@ -59,7 +64,7 @@ function Row({ o, i, go }: { o: (typeof offices)[number]; i: number; go: boolean
   );
 }
 
-export default function OfficeBoard() {
+export default function OfficeBoard({ offices }: { offices: HomeContent["footer"]["offices"] }) {
   const ref = useRef<HTMLTableElement>(null);
   const [go, setGo] = useState(false);
   useEffect(() => {
@@ -80,7 +85,7 @@ export default function OfficeBoard() {
       </thead>
       <tbody>
         {offices.map((o, i) => (
-          <Row key={o.city} o={o} i={i} go={go} />
+          <Row key={i} o={o} i={i} go={go} />
         ))}
       </tbody>
     </table>

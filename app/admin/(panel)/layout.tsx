@@ -1,0 +1,28 @@
+import Link from "next/link";
+import { requireAdmin } from "@/lib/cms/admin";
+import { signOut } from "../actions";
+
+// Always per-request: every admin page depends on the signed-in session.
+export const dynamic = "force-dynamic";
+
+export default async function PanelLayout({ children }: { children: React.ReactNode }) {
+  const { user } = await requireAdmin();
+  return (
+    <>
+      <header className="sticky top-0 z-20 border-b border-line-soft bg-ground-deep/95 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4">
+          <Link href="/admin" className="font-mono text-xs uppercase tracking-[0.08em] text-lamp">
+            Bakervaughn admin
+          </Link>
+          <div className="flex min-w-0 items-center gap-4 text-sm text-text-3">
+            <span className="hidden truncate sm:inline">{user.email}</span>
+            <form action={signOut}>
+              <button className="text-text-2 hover:text-text">Sign out</button>
+            </form>
+          </div>
+        </div>
+      </header>
+      <main className="mx-auto max-w-5xl px-4 pt-8 pb-32">{children}</main>
+    </>
+  );
+}

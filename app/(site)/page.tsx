@@ -10,25 +10,27 @@ import Operators from "@/components/home/Operators";
 import Approach from "@/components/home/Approach";
 import { Beliefs, Labs } from "@/components/home/LabsAndBeliefs";
 import { Close, Footer } from "@/components/home/Close";
+import { getPageContent } from "@/lib/cms/read";
 
-export default function Home() {
+export default async function Home() {
+  const c = await getPageContent("bakervaughn", "home");
   return (
     <EnquiryProvider>
       <Nav />
       <main>
-        <Hero />
-        <WhyWeExist />
-        <Services />
-        <Statement />
-        <ConnectMap />
-        <Work />
-        <Operators />
-        <Approach />
-        <Labs />
-        <Beliefs />
-        <Close />
+        <Hero c={c.hero} />
+        <WhyWeExist c={c.why} />
+        <Services c={c.services} />
+        <Statement c={c.statement} />
+        <ConnectMap c={c.connect} />
+        <Work c={c.work} />
+        <Operators c={c.operators} />
+        <Approach c={c.approach} />
+        <Labs c={c.labs} />
+        <Beliefs c={c.beliefs} />
+        <Close c={c.close} />
       </main>
-      <Footer />
+      <Footer c={c.footer} services={c.services.items} />
     </EnquiryProvider>
   );
 }

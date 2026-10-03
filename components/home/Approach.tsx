@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { stages } from "@/lib/content";
+import type { HomeContent } from "@/lib/cms/home";
 
 // Four selectable stages with a geometric figure that fills in as work progresses.
 function Figure({ active }: { active: number }) {
@@ -33,10 +33,11 @@ function Figure({ active }: { active: number }) {
   );
 }
 
-export default function Approach() {
+export default function Approach({ c }: { c: HomeContent["approach"] }) {
+  const stages = c.stages;
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const s = stages[active];
+  const s = stages[Math.min(active, stages.length - 1)];
 
   const onKey = (e: React.KeyboardEvent, i: number) => {
     const dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
@@ -47,14 +48,16 @@ export default function Approach() {
     tabs.current[n]?.focus();
   };
 
+  if (!s) return null;
+
   return (
     <section className="border-y border-line-soft bg-ground-deep py-20 md:py-28" aria-labelledby="approach-title">
       <div className="wrap">
         <p className="text-[0.95rem] text-text-2" data-reveal>
-          How we work
+          {c.eyebrow}
         </p>
         <h2 id="approach-title" className="display mt-4 max-w-[16ch] text-[clamp(2.4rem,5vw,4.5rem)]" data-reveal>
-          Fix the one thing first. Then connect the rest.
+          {c.title}
         </h2>
 
         <div className="mt-14 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">

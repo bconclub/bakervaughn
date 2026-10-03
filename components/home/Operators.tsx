@@ -1,34 +1,29 @@
-import { advisors, leadership } from "@/lib/content";
+import type { HomeContent } from "@/lib/cms/home";
 
-export default function Operators() {
+export default function Operators({ c }: { c: HomeContent["operators"] }) {
   return (
     <section id="operators" className="py-20 md:py-28" aria-labelledby="ops-title">
       <div className="wrap">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
           <div>
             <p className="text-[0.95rem] text-text-2" data-reveal>
-              Built by operators
+              {c.eyebrow}
             </p>
             <h2 id="ops-title" className="display mt-4 max-w-[12ch] text-[clamp(2.4rem,5vw,4.5rem)]" data-reveal>
-              Built from the shop floor up.
+              {c.title}
             </h2>
           </div>
           <div className="space-y-5 text-lg leading-relaxed text-text-2 lg:pt-12" data-reveal>
-            <p>
-              Our leadership has spent more than 15 years in UK food, retail and hospitality. We know what a Friday-night
-              rush, a supplier shortfall and a Home Office audit feel like, because we've lived them.
-            </p>
-            <p>
-              We rolled out ERPNext across our own businesses first. Then came the problems ERP couldn't solve: missed
-              calls, slow replies and sponsor-licence paperwork. So we built PROXe, Dialgen.AI (our AI receptionist) and VisorFlow.
-            </p>
-            <p className="font-mono text-sm text-text-3">[ADD: founding year and team size]</p>
+            {c.paragraphs.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+            {c.note && <p className="font-mono text-sm text-text-3">{c.note}</p>}
           </div>
         </div>
 
         <ul className="mt-16 grid gap-px bg-line md:grid-cols-3">
-          {leadership.map((p) => (
-            <li key={p.name} className="bg-ground" data-reveal>
+          {c.leadership.map((p, i) => (
+            <li key={i} className="bg-ground" data-reveal>
               <div className="relative grid aspect-[5/4] place-items-center overflow-hidden border-b border-line bg-surface">
                 <span className="display text-[5rem] text-line" aria-hidden data-parallax="24">
                   {p.name.split(" ").map((n) => n[0]).join("")}
@@ -47,10 +42,10 @@ export default function Operators() {
         </ul>
 
         <div className="mt-12 grid gap-6 border-t border-line pt-8 md:grid-cols-[0.6fr_1.4fr]" data-reveal>
-          <p className="text-text-2">Advisory board</p>
+          <p className="text-text-2">{c.advisorsLabel}</p>
           <ul className="grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-4">
-            {advisors.map((a) => (
-              <li key={a.name}>
+            {c.advisors.map((a, i) => (
+              <li key={i}>
                 <p className="font-semibold">{a.name}</p>
                 <p className="text-sm text-text-3">{a.role}</p>
               </li>

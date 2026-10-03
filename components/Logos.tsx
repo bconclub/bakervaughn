@@ -64,9 +64,7 @@ export function ServiceMark({ slug, className = "size-6" }: MarkProps) {
 }
 
 // Client names, shown as plain wordmarks until their real logos are supplied.
-const clients = ["Charcoal Shack", "Arabian Grill", "Khaleej Mandi House", "Harlequin Care Limited", "1 Key Solution"];
-
-export function ClientLogos() {
+export function ClientLogos({ clients }: { clients: string[] }) {
   return (
     <div className="min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
     <ul className="marquee flex w-max items-center gap-12">
