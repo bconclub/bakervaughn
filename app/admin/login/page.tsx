@@ -1,6 +1,7 @@
 import { supabaseConfigured } from "@/lib/supabase/server";
 import { signOut } from "../actions";
 import LoginForm from "./LoginForm";
+import { version } from "@/lib/version";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ denied?: string }> }) {
   const { denied } = await searchParams;
@@ -25,6 +26,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         ) : (
           <LoginForm />
         )}
+        <p className="mt-10 font-mono text-[11px] text-text-3">v{version}</p>
       </div>
     </main>
   );

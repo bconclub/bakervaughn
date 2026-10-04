@@ -34,6 +34,15 @@ straight away; an unedited section shows the content in `lib/cms/home.ts`.
 Without the variables the site still works and shows the default content; `/admin` explains
 what is missing.
 
+**Every login an admin (optional).** `supabase/migrations/20261004130000_cms_admin_accounts.sql` makes each
+Supabase login an admin, with the part of its email before the @ as the username and a display name.
+
+## Versioning
+
+`lib/version.ts` counts shipped batches (`CHANGE_COUNTER`); the version shows in the site footer, on the
+admin login page and in the admin header. Bump it once per shipped batch, keep `package.json` in step,
+and tag the release (`git tag vX.Y.Z`).
+
 ## How it fits together
 
 - `lib/cms/home.ts`: the Home page sections, their defaults and editor hints.
