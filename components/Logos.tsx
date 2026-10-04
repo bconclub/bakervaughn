@@ -3,6 +3,7 @@
 type MarkProps = { slug: string; className?: string };
 
 export const serviceColor: Record<string, string> = {
+  smartsite: "#facc15",
   proxe: "#a78bfa",
   "ai-receptionist": "#2dd4bf",
   visorflow: "#60a5fa",
@@ -14,6 +15,15 @@ export function ServiceMark({ slug, className = "size-6" }: MarkProps) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" } as const;
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      {slug === "smartsite" && (
+        <>
+          <rect {...p} x="3" y="4" width="18" height="16" rx="2" />
+          <path {...p} d="M3 8.5h18" />
+          <circle cx="6" cy="6.25" r="0.8" fill="currentColor" />
+          <circle cx="8.6" cy="6.25" r="0.8" fill="currentColor" />
+          <path {...p} d="M8 11.5h8l-3 3.5v2.5l-2-1V15z" />
+        </>
+      )}
       {(slug === "proxe" || slug === "acquisition") && (
         <>
           <path {...p} d="M4 5.5h16v10H10l-4.5 3.5v-3.5H4z" />

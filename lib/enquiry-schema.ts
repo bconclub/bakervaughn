@@ -2,6 +2,7 @@ import { z } from "zod";
 
 // Framed as business problems, not product names.
 export const SERVICE_OPTIONS = [
+  "A website that brings in customers",
   "Winning and converting more customers",
   "Answering calls and taking bookings",
   "HR, payroll and compliance",
@@ -11,6 +12,7 @@ export const SERVICE_OPTIONS = [
 ] as const;
 
 export const SERVICE_HINTS: Partial<Record<(typeof SERVICE_OPTIONS)[number], string>> = {
+  "A website that brings in customers": "Smartsite: website, leads and conversion",
   "Winning and converting more customers": "AI customer acquisition",
   "Answering calls and taking bookings": "Dialgen.AI, AI receptionist",
   "HR, payroll and compliance": "Rotas, right-to-work, payroll",

@@ -33,9 +33,9 @@ export const homeSections = {
   services: {
     label: "Services",
     anchor: "services",
-    description: "The service menu: Dialgen.AI, PROXe, VisorFlow, ERPNext and marketing.",
+    description: "The service menu: Smartsite, PROXe, Dialgen.AI, VisorFlow, ERPNext and marketing.",
     defaults: {
-      title: "Five services. One brain behind them.",
+      title: "Six services. One brain behind them.",
       intro: "Each is sold separately. Use one, or join them up. Together they share the same data, so nothing gets re-typed.",
       items: c.services,
       helpPrompt: "Not sure where to start?",

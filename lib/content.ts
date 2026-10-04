@@ -102,6 +102,15 @@ export const problems = [
 
 export const services = [
   {
+    slug: "smartsite",
+    name: "Smartsite",
+    kind: "Website & lead generation",
+    line: "A complete customer-facing website that wins the enquiry and converts it: design, SEO, lead capture and follow-up, all in one place.",
+    handles: "Website · leads · conversion",
+    image: "/unsplash/marketing-Rmjq07KI.webp",
+    alt: "A branded shop window display",
+  },
+  {
     slug: "proxe",
     name: "PROXe",
     kind: "AI Customer System",
