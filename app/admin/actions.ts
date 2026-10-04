@@ -13,13 +13,20 @@ export type SaveResult = { ok: true; savedAt: string } | { ok: false; error: str
 
 export async function signIn(_: LoginState, form: FormData): Promise<LoginState> {
   if (!supabaseConfigured) return { error: "Supabase is not configured on this site yet." };
-  const email = String(form.get("email") ?? "").trim();
+  const login = String(form.get("login") ?? "").trim();
   const password = String(form.get("password") ?? "");
-  if (!email || !password) return { error: "Enter your email and password." };
+  if (!login || !password) return { error: "Enter your username or email, and your password." };
 
   const supabase = await createClient();
+  // A username (no "@") is swapped for its admin email before signing in.
+  let email = login;
+  if (!login.includes("@")) {
+    const { data } = await supabase.rpc("cms_admin_email", { p_username: login });
+    if (typeof data !== "string") return { error: "Username or password is incorrect." };
+    email = data;
+  }
   const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return { error: "Email or password is incorrect." };
+  if (error) return { error: "Username or password is incorrect." };
 
   const { data: isAdmin } = await supabase.rpc("is_cms_admin");
   if (isAdmin !== true) {

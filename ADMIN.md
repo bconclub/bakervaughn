@@ -14,6 +14,11 @@ straight away; an unedited section shows the content in `lib/cms/home.ts`.
    ```sql
    insert into public.cms_admins (email) values ('you@example.com');
    ```
+   **Usernames (optional).** Run `supabase/migrations/20261004120000_cms_usernames.sql` once, then give
+   an admin a username so they can sign in with it instead of their email:
+   ```sql
+   update public.cms_admins set username = 'nishaf' where email = 'nishaf@bvcl.com';
+   ```
 3. **Environment variables** (hosting dashboard, e.g. Vercel, then redeploy):
 
    | Variable | Value |

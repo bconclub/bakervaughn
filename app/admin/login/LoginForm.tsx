@@ -11,8 +11,16 @@ export default function LoginForm() {
   return (
     <form action={action} className="mt-8 space-y-5">
       <label className="block text-sm text-text-2">
-        Email
-        <input name="email" type="email" autoComplete="email" required className={input} />
+        Username or email
+        <input
+          name="login"
+          type="text"
+          autoComplete="username"
+          autoCapitalize="none"
+          spellCheck={false}
+          required
+          className={input}
+        />
       </label>
       <label className="block text-sm text-text-2">
         Password
