@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { enquirySchema } from "@/lib/enquiry-schema";
+import { supabaseAnonKey, supabaseConfigured, supabaseUrl } from "@/lib/supabase/server";
 
-// PENDING: persistence (database) and delivery (email / CRM / PROXe) are not
-// implemented. Valid enquiries are only logged on the server for now.
+// Valid enquiries are stored in Supabase (the admin's Enquiries inbox) and logged.
+// PENDING: delivery (email / CRM / PROXe) is not implemented.
 const seen = new Map<string, number>(); // requestId -> timestamp (idempotency, per instance)
 
 export async function POST(req: Request) {
@@ -34,8 +35,46 @@ export async function POST(req: Request) {
 
   const { requestId } = parsed.data;
   if (seen.has(requestId)) return NextResponse.json({ ok: true, duplicate: true });
-  seen.set(requestId, Date.now());
 
-  console.info("[enquiry]", JSON.stringify({ ...parsed.data, receivedAt: new Date().toISOString() }));
+  const e = parsed.data;
+  console.info("[enquiry]", JSON.stringify({ ...e, receivedAt: new Date().toISOString() }));
+
+  // Store in the admin's Enquiries inbox. The anon key may only insert new enquiries
+  // (row-level security); it can't read them back.
+  if (supabaseConfigured) {
+    const res = await fetch(`${supabaseUrl}/rest/v1/enquiries`, {
+      method: "POST",
+      headers: {
+        apikey: supabaseAnonKey,
+        Authorization: `Bearer ${supabaseAnonKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({
+        request_id: e.requestId,
+        area: e.service,
+        challenge: e.challenge,
+        timing: e.timing,
+        name: e.name,
+        email: e.email,
+        company: e.company,
+        phone: e.phone || null,
+        attribution: e.attribution,
+      }),
+    }).catch((err: unknown) => {
+      console.error("[enquiry] store failed", err);
+      return null;
+    });
+    // 409 = this request id was already stored (a retry), which is fine.
+    if (!res || (!res.ok && res.status !== 409)) {
+      if (res) console.error("[enquiry] store failed", res.status, await res.text());
+      return NextResponse.json(
+        { ok: false, error: "We couldn't send that just now. Please try again in a minute." },
+        { status: 502 },
+      );
+    }
+  }
+
+  seen.set(requestId, Date.now());
   return NextResponse.json({ ok: true });
 }

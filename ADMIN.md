@@ -1,8 +1,11 @@
 # Admin panel
 
-`/admin` lets signed-in admins edit every section of the site without a code change.
-Projects → pages → sections → a form for that section's text and lists. Saving publishes
-straight away; an unedited section shows the content in `lib/cms/home.ts`.
+`/admin` lets signed-in admins manage what the site lists, without a code change:
+**Brands** (Trusted by strip, with logos), **Testimonials** (quotes and YouTube videos),
+**Work** (case studies), **Team** (leadership and advisors, with headshots) and the
+**Enquiries** inbox (every consultation request from the site). Each item has a status
+(published, draft, archived), a featured flag and an order; saving updates the site straight away.
+Headings and paragraphs stay in code (`lib/cms/home.ts`).
 
 ## One-time setup
 

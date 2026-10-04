@@ -1,5 +1,5 @@
-// Editable sections of the Home page. Each entry's `defaults` is the content the site
-// shows until that section is edited in /admin, and also the shape the editor follows.
+// Copy for each section of the Home page, kept in code. Lists of things (brands,
+// testimonials, work, team) are managed in /admin; see lib/collections.
 import * as c from "@/lib/content";
 
 export const homeSections = {
@@ -146,17 +146,9 @@ export const homeSections = {
   },
 };
 
-// Editor hints for fields whose values drive behaviour rather than copy.
-export const homeHints: Record<string, string> = {
-  "services.items.slug":
-    "Sets the icon and colour. Use one of: proxe, ai-receptionist, visorflow, faircode-erpnext, marketing.",
-  "services.items.image": "Image path or full URL.",
-  "work.projects.image": "Image path (e.g. /unsplash/souq-NVU_Vaha.webp) or a full Supabase Storage URL.",
-  "approach.stages.key": "Short unique id, letters only (e.g. review).",
-  "footer.offices.tz": "Time zone name, e.g. Europe/London.",
-  "statement.highlight": "These words are shown in amber at the end of the headline.",
-  "why.problems.n": "Small numeral shown beside the problem, e.g. i.",
-};
-
 export type HomeSections = typeof homeSections;
 export type HomeContent = { [K in keyof HomeSections]: HomeSections[K]["defaults"] };
+
+export const homeContent = Object.fromEntries(
+  Object.entries(homeSections).map(([key, section]) => [key, section.defaults]),
+) as HomeContent;

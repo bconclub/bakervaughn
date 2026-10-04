@@ -41,9 +41,11 @@ export default function Work({ c }: { c: HomeContent["work"] }) {
                       data-parallax="28"
                     />
                   )}
-                  <span className="absolute bottom-2 left-2 rounded-full bg-paper/90 px-2 py-0.5 font-mono text-[10px] text-ink-2">
-                    Stock photo · [ADD PROJECT PHOTO]
-                  </span>
+                  {(!w.image || w.image.startsWith("/unsplash/")) && (
+                    <span className="absolute bottom-2 left-2 rounded-full bg-paper/90 px-2 py-0.5 font-mono text-[10px] text-ink-2">
+                      Stock photo · [ADD PROJECT PHOTO]
+                    </span>
+                  )}
                 </div>
               </div>
               <div>
@@ -55,14 +57,16 @@ export default function Work({ c }: { c: HomeContent["work"] }) {
                       ["What we did", w.did],
                       ["The outcome", w.outcome],
                     ] as const
-                  ).map(([k, v]) => (
+                  )
+                    .filter(([, v]) => Boolean(v))
+                    .map(([k, v]) => (
                     <div key={k} className="border-t border-ink/20 pt-4">
                       <dt className="text-sm font-semibold">{k}</dt>
                       <dd className={`mt-2 text-base leading-relaxed ${v.startsWith("[ADD") ? "font-mono text-sm text-docket" : "text-ink-2"}`}>
                         {v}
                       </dd>
                     </div>
-                  ))}
+                    ))}
                 </dl>
                 <a href="#work" className="group mt-8 inline-flex min-h-11 items-center gap-2 text-base font-semibold underline-offset-4 hover:underline">
                   Read the case study

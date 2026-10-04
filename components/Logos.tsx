@@ -63,17 +63,41 @@ export function ServiceMark({ slug, className = "size-6" }: MarkProps) {
   );
 }
 
-// Client names, shown as plain wordmarks until their real logos are supplied.
-export function ClientLogos({ clients }: { clients: string[] }) {
+export type ClientBrand = { name: string; logo_url?: string | null; website_url?: string | null };
+
+// Trusted by strip. Brands with a logo show it (forced to one colour so mixed logos sit
+// together on the dark strip); the rest show their name as a wordmark.
+export function ClientLogos({ clients }: { clients: ClientBrand[] }) {
+  if (clients.length === 0) return null;
   return (
     <div className="min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-    <ul className="marquee flex w-max items-center gap-12">
-      {[...clients, ...clients].map((name, i) => (
-        <li key={i} aria-hidden={i >= clients.length} className="text-text-3 transition-colors hover:text-text-2">
-          <span className="text-[1.05rem] font-semibold whitespace-nowrap">{name}</span>
-        </li>
-      ))}
-    </ul>
+      <ul className="marquee flex w-max items-center gap-12">
+        {[...clients, ...clients].map((b, i) => {
+          const dup = i >= clients.length;
+          const mark = b.logo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element -- admin-uploaded logos of any size and host
+            <img
+              src={b.logo_url}
+              alt={dup ? "" : b.name}
+              loading="lazy"
+              className="h-8 w-auto max-w-[140px] object-contain opacity-60 brightness-0 invert transition-opacity hover:opacity-100"
+            />
+          ) : (
+            <span className="text-[1.05rem] font-semibold whitespace-nowrap">{b.name}</span>
+          );
+          return (
+            <li key={i} aria-hidden={dup || undefined} className="text-text-3 transition-colors hover:text-text-2">
+              {b.website_url ? (
+                <a href={b.website_url} target="_blank" rel="noopener noreferrer" tabIndex={dup ? -1 : undefined}>
+                  {mark}
+                </a>
+              ) : (
+                mark
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

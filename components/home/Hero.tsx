@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import EnquiryButton from "@/components/enquiry/EnquiryButton";
-import { ClientLogos } from "@/components/Logos";
+import { ClientLogos, type ClientBrand } from "@/components/Logos";
 
 import HeroVisual from "./HeroVisual";
 import type { HomeContent } from "@/lib/cms/home";
@@ -39,7 +39,8 @@ function useCursorLight(ref: React.RefObject<HTMLElement | null>) {
   }, [ref]);
 }
 
-export default function Hero({ c }: { c: HomeContent["hero"] }) {
+// brands: published brands from /admin; null falls back to the names in code.
+export default function Hero({ c, brands }: { c: HomeContent["hero"]; brands: ClientBrand[] | null }) {
   const ref = useRef<HTMLElement>(null);
   useCursorLight(ref);
   return (
@@ -77,7 +78,7 @@ export default function Hero({ c }: { c: HomeContent["hero"] }) {
       <div className="wrap relative pb-14">
         <div className="flex flex-col gap-6 border-t border-line-soft pt-8 md:flex-row md:items-center md:justify-between">
           <p className="max-w-[34ch] shrink-0 text-sm text-text-2">{c.trustedLabel}</p>
-          <ClientLogos clients={c.clients} />
+          <ClientLogos clients={brands ?? c.clients.map((name) => ({ name }))} />
         </div>
       </div>
     </section>

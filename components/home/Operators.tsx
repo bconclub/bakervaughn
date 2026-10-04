@@ -1,6 +1,8 @@
 import type { HomeContent } from "@/lib/cms/home";
 
-export default function Operators({ c }: { c: HomeContent["operators"] }) {
+type Leader = { name: string; role: string; note: string; photo?: string | null };
+
+export default function Operators({ c }: { c: Omit<HomeContent["operators"], "leadership"> & { leadership: Leader[] } }) {
   return (
     <section id="operators" className="py-20 md:py-28" aria-labelledby="ops-title">
       <div className="wrap">
@@ -25,17 +27,26 @@ export default function Operators({ c }: { c: HomeContent["operators"] }) {
           {c.leadership.map((p, i) => (
             <li key={i} className="bg-ground" data-reveal>
               <div className="relative grid aspect-[5/4] place-items-center overflow-hidden border-b border-line bg-surface">
-                <span className="display text-[5rem] text-line" aria-hidden data-parallax="24">
-                  {p.name.split(" ").map((n) => n[0]).join("")}
-                </span>
-                <span className="absolute bottom-3 left-3 font-mono text-[11px] text-text-3">[ADD HEADSHOT]</span>
+                {p.photo ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- headshots uploaded from /admin
+                  <img src={p.photo} alt={p.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                ) : (
+                  <>
+                    <span className="display text-[5rem] text-line" aria-hidden data-parallax="24">
+                      {p.name.split(" ").map((n) => n[0]).join("")}
+                    </span>
+                    <span className="absolute bottom-3 left-3 font-mono text-[11px] text-text-3">[ADD HEADSHOT]</span>
+                  </>
+                )}
               </div>
               <div className="p-6">
                 <p className="text-sm text-text-3">{p.role}</p>
                 <p className="mt-1 text-2xl font-bold tracking-[-0.02em]">{p.name}</p>
-                <p className={`mt-3 leading-relaxed ${p.note.startsWith("[ADD") ? "font-mono text-sm text-text-3" : "text-text-2"}`}>
-                  {p.note}
-                </p>
+                {p.note && (
+                  <p className={`mt-3 leading-relaxed ${p.note.startsWith("[ADD") ? "font-mono text-sm text-text-3" : "text-text-2"}`}>
+                    {p.note}
+                  </p>
+                )}
               </div>
             </li>
           ))}
