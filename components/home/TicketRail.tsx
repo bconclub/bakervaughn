@@ -17,16 +17,11 @@ function TicketCard({ p, fresh }: { p: Printed; fresh: boolean }) {
     const el = ref.current;
     const q = gsap.utils.selector(el);
     const tl = gsap.timeline();
-    // Make room, then "print" line by line (stepped reveal), then stamp.
+    // Make room, slide the event in, then show the reply and its status.
     tl.from(el, { height: 0, marginBottom: 0, duration: 0.6, ease: "expo.out" })
-      .fromTo(
-        q(".ticket"),
-        { clipPath: "inset(0 0 100% 0)" },
-        { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "steps(14)" },
-        "<0.1",
-      )
-      .from(q(".reply"), { opacity: 0, duration: 0.3, ease: "none" }, ">-0.1")
-      .from(q(".stamp"), { scale: 1.8, opacity: 0, rotate: -18, duration: 0.45, ease: "back.out(2)" }, ">0.15");
+      .from(q(".ticket"), { opacity: 0, y: -12, duration: 0.5, ease: "power2.out" }, "<0.1")
+      .from(q(".reply"), { opacity: 0, y: 6, duration: 0.35, ease: "power2.out" }, ">0.2")
+      .from(q(".stamp"), { opacity: 0, scale: 0.8, duration: 0.3, ease: "back.out(2)" }, ">0.1");
     return () => {
       tl.kill();
     };
@@ -35,21 +30,21 @@ function TicketCard({ p, fresh }: { p: Printed; fresh: boolean }) {
   const { t } = p;
   return (
     <div ref={ref} className="overflow-hidden" style={{ marginBottom: 12 }}>
-      <article className="ticket relative px-5 pt-4 font-mono text-[13px] leading-[1.55] md:px-6">
-        <div className="flex justify-between border-b border-dashed border-ink-2/40 pb-2 text-[11px] uppercase tracking-[0.06em] text-ink-2">
-          <span>#{String(p.no).padStart(4, "0")} · {t.channel}</span>
-          <span>{t.time}</span>
+      <article className="ticket relative px-5 py-4 text-[14px] leading-relaxed md:px-6">
+        <div className="flex items-center justify-between gap-3 text-xs text-text-3">
+          <span className="truncate">{t.channel}</span>
+          <span className="shrink-0 tabular-nums">{t.time}</span>
         </div>
-        <p className="mt-3 text-[14px] text-ink">“{t.message}”</p>
-        <p className="reply mt-2 pl-3 text-ink-2 [border-left:2px_solid_var(--ink)]">
+        <p className="mt-2.5 text-[15px] text-text">“{t.message}”</p>
+        <p className="reply mt-2.5 rounded-[4px] border-l-2 border-lamp bg-ground px-3 py-2 text-text-2">
           <span className="sr-only">Reply: </span>
           {t.reply}
         </p>
-        <div className="mt-3 flex items-end justify-between gap-3">
-          <span className="text-[11px] uppercase tracking-[0.06em] text-ink-2">
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <span className="text-xs text-text-3">
             {t.service} · {t.outcome}
           </span>
-          <span className="stamp shrink-0 -rotate-6 border-2 border-docket px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.08em] text-docket">
+          <span className="stamp shrink-0 rounded-full bg-lamp/15 px-2.5 py-0.5 text-xs font-semibold text-lamp">
             {t.stamp}
           </span>
         </div>
@@ -100,16 +95,14 @@ export default function TicketRail() {
       <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-72 w-[130%] -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,oklch(79%_0.155_68/0.28),transparent_65%)]" />
       <div className="relative">
         <div className="flex items-center justify-between rounded-[2px] border border-line bg-surface px-4 py-3">
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-2">Across your business</span>
-          <span className="flex items-center gap-2 font-mono text-[11px] whitespace-nowrap uppercase tracking-[0.1em] text-lamp">
+          <span className="text-sm text-text-2">Across your business</span>
+          <span className="flex items-center gap-2 text-sm font-semibold whitespace-nowrap text-lamp">
             <span className="size-2 animate-pulse rounded-full bg-lamp motion-reduce:animate-none" />
             Live 24/7
           </span>
         </div>
-        <div className="mx-3 h-2 bg-ground-deep shadow-[inset_0_2px_4px_oklch(0%_0_0/0.6)]" aria-hidden />
-
         <div
-          className="mx-3 h-[410px] overflow-hidden md:h-[440px] [mask-image:linear-gradient(to_bottom,black_78%,transparent)]"
+          className="mt-3 h-[410px] overflow-hidden md:h-[440px] [mask-image:linear-gradient(to_bottom,black_78%,transparent)]"
           aria-live="polite"
           aria-label="Sample events handled across a business"
         >
@@ -135,7 +128,7 @@ export default function TicketRail() {
             </button>
           ))}
         </div>
-        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.08em] text-text-3">
+        <p className="mt-3 text-xs text-text-3">
           Scripted preview · synthetic data
         </p>
       </div>

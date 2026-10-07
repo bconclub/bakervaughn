@@ -79,14 +79,12 @@ body {
   .wrap { padding-inline: 32px; }
 }
 
-/* Thermal ticket: torn bottom edge */
+/* Live event card in the "Why we exist" demo */
 .ticket {
-  background: var(--paper);
-  color: var(--ink);
-  --tear: 7px;
-  mask:
-    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(var(--tear) * 2) 100%;
-  padding-bottom: calc(var(--tear) + 14px);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 4px;
 }
 
 /* Grain overlay */

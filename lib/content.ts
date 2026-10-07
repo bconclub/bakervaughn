@@ -84,19 +84,22 @@ export const demoPrompts = [
 
 export const problems = [
   {
-    n: "i.",
+    n: "01",
     title: "Enquiries go unanswered",
     body: "Calls ring out after hours and DMs sit unread while the team is busy.",
+    fixedBy: "Smartsite · PROXe · Dialgen.AI",
   },
   {
-    n: "ii.",
+    n: "02",
     title: "Data lives in ten places",
     body: "Stock, sales and staff records sit in different tools that never agree.",
+    fixedBy: "Faircode ERPNext",
   },
   {
-    n: "iii.",
+    n: "03",
     title: "Compliance is a scramble",
     body: "Right-to-work checks and sponsor duties get chased at the last minute.",
+    fixedBy: "VisorFlow",
   },
 ];
 
